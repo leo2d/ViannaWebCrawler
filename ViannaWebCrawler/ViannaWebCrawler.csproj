@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Discipline.cs" />
+    <Compile Include="GradebookRequest.cs" />
     <Compile Include="IGetDictionary.cs" />
     <Compile Include="LoginData.cs" />
     <Compile Include="LoginFailedException.cs" />
