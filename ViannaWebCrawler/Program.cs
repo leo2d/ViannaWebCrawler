@@ -8,28 +8,41 @@ using System.Net.Http;
 
 namespace ViannaWebCrawler
 {
-
-
     class Program
     {
         static void Main(string[] args)
         {
-            StartCrawlerAsync();
 
+            //Todo: Remover antes de comitar
+            LoginRequest loginRequest = new LoginRequest
+            (
+                new LoginData()
+                {
+                    Id = 0,
+                    Password = ""
+                }
+            );
+
+            var responseMessage = loginRequest.Login();
+            var responseString = responseMessage.Content.ReadAsStringAsync().Result;
+
+            GradebookRequest requestPage = new GradebookRequest(loginRequest.Client);
+
+            var html = requestPage.GradebookPageRequest();
+
+            var gradebook = GetGradebook(html);
 
             Console.ReadKey();
         }
 
-        private static async Task StartCrawlerAsync()
+        private static object GetGradebook(string html)
         {
-            var url = "http://aluno.viannajr.edu.br/";
-            var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
-            //    var div =
-            //        htmlDocument.DocumentNode.Descendants("div")
-            //            .Where(x -> x.GetatributeValue("class", "").Equals("form-control")).ToList();
+
+            var tableNode = htmlDocument.DocumentNode.SelectSingleNode("//table[@class='table table-striped']");
+
+            return tableNode;
         }
     }
 
