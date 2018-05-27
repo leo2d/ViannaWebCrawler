@@ -35,9 +35,12 @@ namespace ViannaWebCrawler
                 Thread.Sleep(3000);
 
             if (!response.Result.IsSuccessStatusCode)
-                throw new LoginFailedException("Login was failed!");
+                throw new LoginFailedException("Login request was failed!");
 
             var responseString = response.Result.Content.ReadAsStringAsync().Result;
+
+            if(responseString.Contains("Login"))
+                throw new LoginFailedException("Login was failed!");
 
             return response.Result;
         }

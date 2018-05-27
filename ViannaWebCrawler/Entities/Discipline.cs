@@ -17,9 +17,9 @@ namespace ViannaWebCrawler
         //Nota da recuperacao ou prova exame
         public double RetakeTestGrade { get; set; }
         //Nota final
-        public double TotalGrade { get; set; }
+        public double FinalMedia { get; set; }
         //Numero de faltas
-        public int MissedClass { get; set; }
+        public int MissedClasses { get; set; }
         //Percentual de faltas
         public double MissedClassPercentage { get; set; }
 
