@@ -59,7 +59,7 @@ namespace ViannaWebCrawler
                 newCol.Add(parsedDouble);
             }
 
-            int.TryParse(col[2].InnerText, out int parsedInt);
+            int.TryParse(col[6].InnerText, out int parsedInt);
 
             discipline = new Discipline()
             {
