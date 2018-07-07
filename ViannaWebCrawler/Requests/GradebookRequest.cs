@@ -19,13 +19,14 @@ namespace ViannaWebCrawler
 
         public string GradebookPageRequest()
         {
-            var html = Client.GetStringAsync(Url);
+            var response = Client.GetStringAsync(Url);
+            response.Wait();
 
             //TODO: Pensar em  uma forma melhor de validar e alertar isso
-            if (html.IsFaulted)
+            if (response.IsFaulted)
                 throw new Exception("The request was failed");
 
-            return html.Result;
+            return response.Result;
         }
 
     }

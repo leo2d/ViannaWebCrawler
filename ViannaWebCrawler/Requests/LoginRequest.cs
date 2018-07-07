@@ -30,9 +30,9 @@ namespace ViannaWebCrawler
             HttpContent httpContent = new FormUrlEncodedContent(FormData.GetAsStringDictionary());
 
             var response = Client.PostAsync("http://aluno.viannajr.edu.br/auth", httpContent);
-
-            while (!response.IsCompleted)
-                Thread.Sleep(3000);
+            response.Wait();
+            //while (!response.IsCompleted)
+            //    Thread.Sleep(3000);
 
             if (!response.Result.IsSuccessStatusCode)
                 throw new LoginFailedException("Login request was failed!");
