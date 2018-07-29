@@ -2,10 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
-namespace ViannaWebCrawler
+namespace ViannaWebCrawler.Controls.GradebookColtrol
 {
     public static class GradebookManager
     {
@@ -61,9 +60,12 @@ namespace ViannaWebCrawler
 
             int.TryParse(col[6].InnerText, out int parsedInt);
 
+            Regex reg = new Regex(@"[^\\s]-.*$");
+            string name = reg.Replace(col[0].InnerText, String.Empty);
+
             discipline = new Discipline()
             {
-                Name = col[0].InnerText,
+                Name = name,
                 FirstBimesterGrade = newCol[1],
                 SecondBimesterGrade = newCol[2],
                 Media = newCol[3],
