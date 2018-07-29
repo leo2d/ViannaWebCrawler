@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
+using ViannaWebCrawler.Controls.LoginControl;
 
 namespace ViannaWebCrawler
 {
@@ -31,8 +26,6 @@ namespace ViannaWebCrawler
 
             var response = Client.PostAsync("http://aluno.viannajr.edu.br/auth", httpContent);
             response.Wait();
-            //while (!response.IsCompleted)
-            //    Thread.Sleep(3000);
 
             if (!response.Result.IsSuccessStatusCode)
                 throw new LoginFailedException("Login request was failed!");
