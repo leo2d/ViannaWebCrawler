@@ -3,9 +3,9 @@
     public class ClassDay
     {
         public string DayOfWeek { get; set; }
-        public string FirstClass { get; set; }
-        public string SecondClass { get; set; }
-        public string ThirdClass { get; set; }
-        public string FourthClass { get; set; }
+        public TimeTableDiscipline FirstClass { get; set; }
+        public TimeTableDiscipline SecondClass { get; set; }
+        public TimeTableDiscipline ThirdClass { get; set; }
+        public TimeTableDiscipline FourthClass { get; set; }
     }
 }

@@ -87,6 +87,7 @@ namespace ViannaWebCrawler
             foreach (var disclipline in gradebook.GradebookResume)
             {
                 Console.WriteLine($"Disciplina: {disclipline.Name}");
+                Console.WriteLine($"Disciplina: {disclipline.Name}");
                 Console.WriteLine($"Nota 1o B: {disclipline.FirstBimesterGrade}");
                 Console.WriteLine($"Nota 2o B: {disclipline.SecondBimesterGrade}");
                 Console.WriteLine($"Media das notas: {disclipline.Media}");
@@ -103,10 +104,17 @@ namespace ViannaWebCrawler
             {
                 Console.WriteLine(classDay.DayOfWeek);
                 Console.WriteLine("-------");
-                Console.WriteLine(classDay.FirstClass);
-                Console.WriteLine(classDay.SecondClass);
-                Console.WriteLine(classDay.ThirdClass);
-                Console.WriteLine(classDay.FourthClass);
+                Console.WriteLine(classDay.FirstClass.NickName);
+                Console.WriteLine(classDay.FirstClass.Name);
+                Console.WriteLine("--");
+                Console.WriteLine(classDay.SecondClass.NickName);
+                Console.WriteLine(classDay.SecondClass.Name);
+                Console.WriteLine("--");
+                Console.WriteLine(classDay.ThirdClass.NickName);
+                Console.WriteLine(classDay.ThirdClass.Name);
+                Console.WriteLine("--");
+                Console.WriteLine(classDay.FourthClass.NickName);
+                Console.WriteLine(classDay.FourthClass.Name);
                 Console.WriteLine("\n \n");
             }
         }

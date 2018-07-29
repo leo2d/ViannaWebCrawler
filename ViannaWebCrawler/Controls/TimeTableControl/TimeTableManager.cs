@@ -44,7 +44,7 @@ namespace ViannaWebCrawler.Controls.TimeTableControl
 
         private static ClassDay ParseToClassDay(HtmlNodeCollection nodes, string day, List<string> schedules)
         {
-            //Abreviacao do nome da siciplina.
+            //Abreviacao do nome da disciplina.
             var nickNames = nodes.Select(x => x.InnerText.Trim()).ToList();
 
             //Embora no site esteja a abeviacao do nome, optei por preencher os objetos com o nome completo
@@ -54,19 +54,33 @@ namespace ViannaWebCrawler.Controls.TimeTableControl
             Regex reg = new Regex("^[^a-zA-Z]+");
             names = names.Select(s => reg.Replace(s, String.Empty)).ToList();
 
-            //Dicionario tem a funcao de garantir que o horario estara na mesma posicado do site
-            var dayDictionary = new Dictionary<string, string>();
+            var disciplines = new List<TimeTableDiscipline>();
 
-            for (int i = 0; i < schedules.Count(); i++)
-                dayDictionary.Add(schedules[i], names[i]);
+            for (int i = 0; i < nickNames.Count; i++)
+            {
+                disciplines.Add
+                    (
+                        new TimeTableDiscipline()
+                        {
+                            NickName = nickNames[i],
+                            Name = names[i]
+                        }
+                    );
+            }
+
+            //Dicionario tem a funcao de garantir que o horario estara na mesma posicado do site
+            var dayDisciplines = new Dictionary<string, TimeTableDiscipline>();
+
+            for (int i = 0; i < disciplines.Count; i++)
+                dayDisciplines.Add(schedules[i], disciplines[i]);
 
             return new ClassDay()
             {
                 DayOfWeek = day,
-                FirstClass = dayDictionary["1"],
-                SecondClass = dayDictionary["2"],
-                ThirdClass = dayDictionary["3"],
-                FourthClass = dayDictionary["4"],
+                FirstClass = dayDisciplines["1"],
+                SecondClass = dayDisciplines["2"],
+                ThirdClass = dayDisciplines["3"],
+                FourthClass = dayDisciplines["4"],
             };
         }
     }
