@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
-using System.Net.Http;
-using System.Security;
+using System.IO;
+using ViannaWebCrawler.Controls.GradebookColtrol;
+using ViannaWebCrawler.Controls.LoginControl;
+using ViannaWebCrawler.Controls.TimeTableControl;
+using ViannaWebCrawler.Entities;
 
 namespace ViannaWebCrawler
 {
-    class Program
+    class ProGram
     {
         static void Main(string[] args)
         {
@@ -23,7 +21,7 @@ namespace ViannaWebCrawler
                 new LoginData()
                 {
                     Id = mat,
-                    Password = GetPassw()//Console.ReadLine()
+                    Password = GetPassw()
                 }
             );
 
@@ -33,10 +31,16 @@ namespace ViannaWebCrawler
 
             var responseMessage = loginRequest.Login();
 
+            var table = TimeTableManager.GetTimeTable(responseMessage.Content.ReadAsStringAsync().Result);
+
+            Console.Clear();
+
+            PrintTimeTable(table);
+
             GradebookRequest requestPage = new GradebookRequest(loginRequest.Client);
 
             var html = requestPage.GradebookPageRequest();
-            
+
             var gradebook = GradebookManager.GetGradebookResume(html);
 
             Console.Clear();
@@ -79,7 +83,7 @@ namespace ViannaWebCrawler
         private static void PrintGradeBook(Gradebook gradebook)
         {
             Console.WriteLine("\r\t ** Boletim **\n\n");
-            
+
             foreach (var disclipline in gradebook.GradebookResume)
             {
                 Console.WriteLine($"Disciplina: {disclipline.Name}");
@@ -91,6 +95,19 @@ namespace ViannaWebCrawler
                 Console.WriteLine($"No de faltas ate agora: {disclipline.MissedClasses}");
                 Console.WriteLine($"Percentual de faltas ate agora: {disclipline.MissedClassPercentage}");
                 Console.WriteLine("============================================================\n\n");
+            }
+        }
+        private static void PrintTimeTable(TimeTable table)
+        {
+            foreach (var classDay in table.ClassSchedule)
+            {
+                Console.WriteLine(classDay.DayOfWeek);
+                Console.WriteLine("-------");
+                Console.WriteLine(classDay.FirstClass);
+                Console.WriteLine(classDay.SecondClass);
+                Console.WriteLine(classDay.ThirdClass);
+                Console.WriteLine(classDay.FourthClass);
+                Console.WriteLine("\n \n");
             }
         }
     }

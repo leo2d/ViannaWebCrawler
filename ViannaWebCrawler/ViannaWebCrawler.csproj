@@ -44,14 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\TimeTableControl\TimeTableManager.cs" />
+    <Compile Include="Entities\ClassDay.cs" />
     <Compile Include="Entities\Discipline.cs" />
     <Compile Include="Entities\Gradebook.cs" />
-    <Compile Include="Controls\Gradebook\GradebookManager.cs" />
+    <Compile Include="Controls\GradebookControl\GradebookManager.cs" />
+    <Compile Include="Entities\TimeTable.cs" />
     <Compile Include="Requests\GradebookRequest.cs" />
     <Compile Include="Interfaces\IGetDictionary.cs" />
-    <Compile Include="Controls\Login\LoginData.cs" />
+    <Compile Include="Controls\LoginControl\LoginData.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
-    <Compile Include="Controls\Login\LoginHeader.cs" />
+    <Compile Include="Controls\LoginControl\LoginHeader.cs" />
     <Compile Include="Requests\LoginRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
