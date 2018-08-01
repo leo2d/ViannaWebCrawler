@@ -22,19 +22,29 @@ namespace ViannaWebCrawler.Controls.TimeTableControl
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
 
+            string xpath;
+
             //Pega a linha que contem os dias da semana
-            var nodeDays = document.DocumentNode.SelectNodes("//th[@style='width: 18%;']");
+            xpath = "//th[@style='width: 18%;']";
+            var nodeDays = document.DocumentNode.SelectNodes(xpath);
+            nodeDays = ValidateNodes(nodeDays, xpath);
+
             var days = nodeDays.Select(n => n.InnerText).ToList();
 
             var classDays = new List<ClassDay>();
 
             //Pega a coluna com a ordem dos horarios
-            var schedulesNodes = document.DocumentNode.SelectNodes($"//tbody/tr[td]/*[1]");
+            xpath = "//tbody/tr[td]/*[1]";
+            var schedulesNodes = document.DocumentNode.SelectNodes(xpath);
+            schedulesNodes = ValidateNodes(schedulesNodes, xpath);
+
             var schedules = schedulesNodes.Select(o => o.InnerText.Replace("&ordm;", String.Empty)).ToList();
 
             for (int i = 2, j = 0; i < nodeDays.Count + 2; i++, j++)
             {
-                var nodes = document.DocumentNode.SelectNodes($"//tbody/tr[td]/*[{i}]/abbr");
+                xpath = $"//tbody/tr[td]/*[{i}]/abbr";
+                var nodes = document.DocumentNode.SelectNodes(xpath);
+                nodes = ValidateNodes(nodes, xpath);
 
                 classDays.Add(ParseToClassDay(nodes, days[j], schedules));
             }
@@ -42,8 +52,18 @@ namespace ViannaWebCrawler.Controls.TimeTableControl
             return classDays;
         }
 
+        public static HtmlNodeCollection ValidateNodes(HtmlNodeCollection nodes, string xpath)
+        {
+            if (nodes == null)
+                throw new NodeNotFoundException($"Could not found node {xpath}");
+
+            return nodes;
+        }
+
         private static ClassDay ParseToClassDay(HtmlNodeCollection nodes, string day, List<string> schedules)
         {
+            if (day.Equals("Sexta"))
+                Console.Write("adasdad");
             //Abreviacao do nome da disciplina.
             var nickNames = nodes.Select(x => x.InnerText.Trim()).ToList();
 
@@ -77,10 +97,21 @@ namespace ViannaWebCrawler.Controls.TimeTableControl
             return new ClassDay()
             {
                 DayOfWeek = day,
-                FirstClass = dayDisciplines["1"],
-                SecondClass = dayDisciplines["2"],
-                ThirdClass = dayDisciplines["3"],
-                FourthClass = dayDisciplines["4"],
+                FirstClass = GetValue(dayDisciplines, "1"),
+                SecondClass = GetValue(dayDisciplines, "2"),
+                ThirdClass = GetValue(dayDisciplines, "3"),
+                FourthClass = GetValue(dayDisciplines, "4"),
+            };
+        }
+
+        private static TimeTableDiscipline GetValue(Dictionary<string, TimeTableDiscipline> disciplines, string key)
+        {
+            disciplines.TryGetValue(key, out TimeTableDiscipline value);
+
+            return value ?? new TimeTableDiscipline
+            {
+                NickName = "-",
+                Name = "AULA VAGA"
             };
         }
     }
