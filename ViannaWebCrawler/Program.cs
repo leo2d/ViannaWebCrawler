@@ -87,7 +87,6 @@ namespace ViannaWebCrawler
             foreach (var disclipline in gradebook.GradebookResume)
             {
                 Console.WriteLine($"Disciplina: {disclipline.Name}");
-                Console.WriteLine($"Disciplina: {disclipline.Name}");
                 Console.WriteLine($"Nota 1o B: {disclipline.FirstBimesterGrade}");
                 Console.WriteLine($"Nota 2o B: {disclipline.SecondBimesterGrade}");
                 Console.WriteLine($"Media das notas: {disclipline.Media}");
