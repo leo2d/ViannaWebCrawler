@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 using ViannaWebCrawler.Controls.LoginControl;
 
 namespace ViannaWebCrawler
@@ -13,6 +14,9 @@ namespace ViannaWebCrawler
 
         public LoginRequest(LoginData formData)
         {
+            ServicePointManager.ServerCertificateValidationCallback +=
+            (sender, cert, chain, sslPolicyErrors) => true;
+
             Client = new HttpClient();
             FormData = formData;
         }
@@ -24,7 +28,7 @@ namespace ViannaWebCrawler
 
             HttpContent httpContent = new FormUrlEncodedContent(FormData.GetAsStringDictionary());
 
-            var response = Client.PostAsync("http://aluno.viannajr.edu.br/auth", httpContent);
+            var response = Client.PostAsync("https://aluno.vianna.edu.br/auth", httpContent);
             response.Wait();
 
             if (!response.Result.IsSuccessStatusCode)
@@ -32,7 +36,7 @@ namespace ViannaWebCrawler
 
             var responseString = response.Result.Content.ReadAsStringAsync().Result;
 
-            if(responseString.Contains("Login"))
+            if (responseString.Contains("Login"))
                 throw new LoginFailedException("Login was failed!");
 
             return response.Result;
