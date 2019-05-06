@@ -9,7 +9,7 @@ namespace ViannaWebCrawler
 {
     public class GradebookRequest
     {
-        public string Url { get; set; } = "http://aluno.viannajr.edu.br/intranet/academico/boletim";
+        public string Url { get; set; } = "https://aluno.vianna.edu.br/intranet/academico/boletim";
         public HttpClient Client { get; private set; }
 
         public GradebookRequest(HttpClient client)
